@@ -1,0 +1,6 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.mybatis.mapper.InstructorDetailMapper">
+    <insert id="addInstructorDetail" useGeneratedKeys="true" keyProperty="id">
+        insert into instructor_detail values(null,#{youtubeChannel},#{hobby})
+    </insert>
+</mapper>

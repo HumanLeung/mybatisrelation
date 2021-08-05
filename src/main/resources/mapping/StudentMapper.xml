@@ -1,0 +1,36 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.mybatis.mapper.StudentMapper">
+    <resultMap id="StudentMap" type="Student">
+       <id column="id" property="id"/>
+        <result column="first_name" property="firstName"/>
+        <result column="last_name" property="lastName"/>
+        <result column="email" property="email"/>
+        <collection property="courses" ofType="Course">
+            <id column="id" property="id"/>
+            <result column="title" property="title"/>
+        </collection>
+    </resultMap>
+
+    <insert id="addStudent">
+         insert into student values(#{id},#{firstName},#{lastName},#{email})
+    </insert>
+
+    <insert id="addCourses">
+        insert into course_student values(#{course.id},#{student.id})
+    </insert>
+    <delete id="deleteStu">
+        delete from student where id = #{sid}
+    </delete>
+
+    <select id="findStudent" resultMap="StudentMap">
+        SELECT s.id, s.first_name, s.last_name, s.email, c.id, c.title from student s
+        left join course_student cs on  s.id = cs.student_id left join course c
+        on cs.course_id = c.id where s.id = #{sid}
+    </select>
+
+    <select id="findAllStudent" resultMap="StudentMap">
+        SELECT s.id, s.first_name, s.last_name, s.email, c.id, c.title from student s
+       left join course_student cs on  s.id = cs.student_id left join course c
+       on cs.course_id = c.id
+    </select>
+</mapper>
