@@ -3,7 +3,7 @@
          xsi:noNamespaceSchemaLocation = "http://ehcache.org/ehcache.xsd"
          updateCheck = "false">
 
-<!--    <diskStore path="java.io.tmpdir" />-->
+    <diskStore path="user.dir/cache" />
 
     <defaultCache eternal="false"
                   timeToIdleSeconds="123" timeToLiveSeconds="311"

@@ -31,4 +31,10 @@ public class HelloController {
         cache.put("key","asdas");
         return "jaja";
     }
+    @GetMapping("/delete")
+    public void delete(){
+        Cache cache = cacheManager.getCache("usersCache");
+        cache.evict("key");
+        System.out.println(cache.get("key"));
+    }
 }
