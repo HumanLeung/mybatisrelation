@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 
 import org.springframework.cache.CacheManager;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("my")
@@ -20,9 +20,13 @@ public class HelloController {
     @Autowired
     private CacheManager cacheManager;
 
-    @RequestMapping("/intercept")
-    public Student test() {
-      return service.findStudent(1);
+    @RequestMapping("/intercept/{num}")
+    public Student test(@PathVariable @Valid Integer num) {
+      return service.findStudent(num);
+    }
+    @PostMapping("/stu")
+    public void add(@RequestBody @Valid Student student){
+        System.out.println(student);
     }
 
     @GetMapping("cache")
