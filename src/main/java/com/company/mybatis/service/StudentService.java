@@ -1,5 +1,6 @@
 package com.company.mybatis.service;
 
+import com.company.mybatis.controller.StudentController;
 import com.company.mybatis.entity.Course;
 import com.company.mybatis.entity.Instructor;
 import com.company.mybatis.entity.InstructorDetail;
@@ -21,21 +22,37 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfigurationImportSelector;
+import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.core.io.support.SpringFactoriesLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.util.List;
 
 @Service
-public class StudentService {
+public class StudentService implements BeanNameAware,ApplicationContextAware {
 
     private final InstructorMapper instructorMapper;
     private final InstructorDetailMapper instructorDetailMapper;
     private final CourseMapper courseMapper;
     private final StudentMapper studentMapper;
+
+    @Autowired
+    public WebApplicationContext webApplicationContext;
+
+    @Autowired
+    ApplicationContext application;
+
+    @Autowired
+    AbstractApplicationContext abstractApplicationContext;
+
+    @Autowired
+    StudentController studentController;
 
     @Autowired
     public StudentService(InstructorMapper instructorMapper, InstructorDetailMapper instructorDetailMapper,
@@ -105,6 +122,31 @@ public class StudentService {
         PageHelper.startPage(pageNum, pageSize);
         List<Student> StuList = studentMapper.findAllStudent();
         return new PageInfo<>(StuList);
+    }
+
+    @Override
+    public void setBeanName(String s) {
+        System.out.println(s+"this is name");
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        System.out.println(webApplicationContext.getBean("haha"));
+        System.out.println(application.getBean("haha")+"parent");
+        System.out.println(applicationContext.getBean("haha")+" service ");
+        System.out.println(applicationContext.getDisplayName()+"service");
+
+
+        System.out.println(application == applicationContext);
+        System.out.println(studentController.getClass());
+        System.out.println(webApplicationContext == applicationContext);
+        System.out.println(webApplicationContext == abstractApplicationContext);
+
+//       AnnotationConfigServletWebServerApplicationContext
+
+
+//        WebApplicationContext
+//        System.out.println(applicationContext.getBean("applicationContext"));
     }
 }
 

@@ -6,19 +6,25 @@ import com.company.mybatis.entity.Student;
 import com.company.mybatis.pojo.PageRequest;
 import com.company.mybatis.service.StudentService;
 import com.github.pagehelper.Page;
+import org.apache.catalina.core.ApplicationContextFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import javax.servlet.ServletContext;
 import java.util.List;
 
 @RestController
 public class StudentController {
 
     public StudentService service;
+    private final ServletContext context;
 
     @Autowired
-    public StudentController(StudentService service) {
+    public StudentController(StudentService service, ServletContext context) {
         this.service = service;
+        this.context = context;
     }
 
     @GetMapping("/testOne")
@@ -60,9 +66,15 @@ public class StudentController {
         return service.findAllStudent(page,size).getContent();
     }
 
-    @DeleteMapping("deleteStu")
+    @GetMapping("testMvc")
         public void deleteStu() {
-         service.deleteStu(3);
+        ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(context);
+        System.out.println(ac.getDisplayName());
+        System.out.println(context.getClass());
+        System.out.println(ac.getDisplayName());
+//        ApplicationContextFacade
+//         service.deleteStu(3);
+
         }
 
 }
