@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/cache")
+//@RequestMapping("/cache")
 public class CacheController {
 
     @Autowired

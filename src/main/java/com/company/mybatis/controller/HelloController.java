@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Locale;
 
 @RestController("haha")
-@RequestMapping("my")
+//@RequestMapping("my")
 public class HelloController implements ApplicationContextAware {
     /*
      在每个controller里面写上@ExceptionHandler可以处理当前controller里面抛出的异常
