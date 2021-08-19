@@ -16,6 +16,7 @@ import javax.servlet.ServletContext;
 import java.util.List;
 
 @RestController
+@RequestMapping("/student")
 public class StudentController {
 
     public StudentService service;
